@@ -1,21 +1,21 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-// import "swiper/css/navigation";
-// import "swiper/css";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import { memo } from "react";
 import { IMAGE_URL } from "../../../shared/const";
 
+const MovieSlider = ({ data, imagesData }: any) => {
+  console.log("img", imagesData);
 
-const MovieSlider = ({ data, imagesData}: any) => {
-    console.log("img", imagesData);
-    
   return (
     <div className="max-w-2xl mx-50 ml-85">
       <Swiper
         modules={[Navigation]}
-        navigation={true} // chap/o‘ng tugmalarni yoqadi
-        spaceBetween={1} // slaydlar orasidagi masofa
-        slidesPerView={5} // bir vaqtning o‘zida 3ta rasm ko‘rinadi
+        navigation={true}
+        spaceBetween={1} 
+        slidesPerView={5}
       >
         {data?.results.map((movie: any) => (
           <SwiperSlide key={movie.id}>
@@ -34,7 +34,6 @@ const MovieSlider = ({ data, imagesData}: any) => {
             </div>
           </SwiperSlide>
         ))}
-        
       </Swiper>
     </div>
   );

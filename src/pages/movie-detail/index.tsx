@@ -1,5 +1,5 @@
-import { memo } from 'react';
-import { useParams } from 'react-router-dom';
+import { memo} from 'react';
+import { NavLink, Outlet, useParams } from 'react-router-dom';
 import { useMovieDetail } from './services/useMovieDetail';
 import { IMAGE_URL } from '../../shared/const';
 import MovieView from '../../shared/components/movie-view/MovieView';
@@ -10,10 +10,7 @@ const MovieDetail = () => {
   const {data, isLoading} = getMovieById(id || "")
   const {data: imagesData} = getMovieItems(id || "", "images")
   const {data: similarData} = getMovieItems(id || "", "similar")
-  const {data: creditsData} = getMovieItems(id || "", "credits")
-
-  console.log(creditsData);
-  
+    
 
   if(isLoading){
     return <div className='container mx-auto '>
@@ -31,27 +28,20 @@ const MovieDetail = () => {
         <h1 className='text-3xl font-bold'>{data?.title}</h1>
         <strong>{data?.budget?.toLocaleString()} USD</strong>
       </div>
-      <div className='flex flex-wrap'>
+      <div className='flex overflow-x-auto'>
         {
           imagesData?.backdrops?.slice(0, 20)?.map((item: any, inx: number) => (
-            <img loading='lazy'  key={inx} src={IMAGE_URL + item.file_path} width={180} alt="" />
+            <img loading='lazy'  key={inx} src={IMAGE_URL + item.file_path} className='min-w-[180px]' width={180} alt="" />
           ))
         }
       </div>
-      <div className='flex flex-wrap'>
-        {
-          creditsData?.cast?.map((user: any) => {
-            const image = user.profile_path ? IMAGE_URL + user.profile_path : "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png"
-            return <div key={user.id}>
-              <img loading='lazy' src={image} width={80} alt="" />
-              <h3>{user.name}</h3>
-              <p className='text-gray-500'>{user.character}</p>
-            </div>
-        })
-        }
+      <div className="container flex gap-4 my-4 border-2 border-gray-200">
+        <NavLink to={""}>Cast</NavLink>
+        <NavLink to={"crew"}>Crew</NavLink>
       </div>
+      <Outlet/>
       <div>
-        <MovieView data={similarData?.results}/>
+        <MovieView data={similarData?.results?.slice(0,4)}/>
       </div>
     </div>
   );
