@@ -41,7 +41,7 @@ const Person = () => {
             <Image
               key={index}
               src={IMAGE_URL + item.file_path}
-              className="min-w-[150px] h-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform"
+              className="max-w-[150px] h-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform"
             />
           ))}
         </div>
